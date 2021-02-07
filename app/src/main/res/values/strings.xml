@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Airline App</string>
+    <string name="add_button">addButton</string>
+    <string name="search_button">searchButton</string>
+    <string name="help">HELP</string>
+    <string name="readme">README</string>
+    <string name="browse_button">browseButton</string>
+    <string name="add">ADD</string>
+    <string name="arrival_time">Arrival time</string>
+    <string name="arrival_date">Arrival date</string>
+    <string name="departure_time">Departure time</string>
+    <string name="departure_date">Departure date</string>
+    <string name="departure_airport">Departure airport</string>
+    <string name="flight_number">Flight number</string>
+    <string name="airline_name">Airline name</string>
+    <string name="arrival_airport">Arrival airport</string>
+    <string name="enter_airline_name_here">enter airline name</string>
+    <string name="enter_flight_number_here">enter flight number</string>
+    <string name="enter_airport_code">3-letter airport code</string>
+    <string name="enter_date">MM/DD/YYYY</string>
+    <string name="enter_time">hh:mm AM/PM</string>
+    <string name="search">SEARCH</string>
+    <string name="readme_txt">\t\t\tThis is an airline application. On the main screen, you can choose to add a flight to store in your phone, view all the airlines\' flights or search for flights.</string>
+    <string name="info">Name: Zhe Han\nAssginment: Project #6\nCourse: CS410J Java</string>
+    <string name="dirName">airline_app</string>
+    <string name="help_txt">If you need extra help, click the buton below and take a look.</string>
+
+</resources>

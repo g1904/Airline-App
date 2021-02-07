@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ImageButton
+        android:id="@+id/browse"
+        android:layout_width="410dp"
+        android:layout_height="178dp"
+        android:background="@null"
+        android:contentDescription="@string/browse_button"
+        android:onClick="launchBrowse"
+        android:scaleType="fitXY"
+        android:src="@drawable/browse_button"
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/add"
+        android:layout_width="410dp"
+        android:layout_height="178dp"
+        android:background="@null"
+        android:contentDescription="@string/add_button"
+        android:onClick="launchAdd"
+        android:scaleType="fitXY"
+        android:src="@drawable/add_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search" />
+
+    <ImageButton
+        android:id="@+id/search"
+        android:layout_width="410dp"
+        android:layout_height="178dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="175dp"
+        android:background="@null"
+        android:contentDescription="@string/search_button"
+        android:onClick="launchSearch"
+        android:scaleType="fitXY"
+        android:src="@drawable/search_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/readme"
+        android:layout_width="210dp"
+        android:layout_height="80dp"
+        android:onClick="launchReadMe"
+        android:text="@string/readme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add" />
+
+    <Button
+        android:id="@+id/help"
+        android:layout_width="210dp"
+        android:layout_height="80dp"
+        android:onClick="launchHelp"
+        android:text="@string/help"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add" />
+</androidx.constraintlayout.widget.ConstraintLayout>
