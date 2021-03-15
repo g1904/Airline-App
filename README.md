@@ -37,3 +37,5 @@ The fields and methods naming is meaningful from the start, and the errors are a
 Many functions that include format checking and XML parsing features were extremely lengthy, and there were some duplications caused by copy-pasting the same code and modifying on top of that.
 
 Since we used to use the maven site feature to configures some codebase reports and analysis, the comments explain the functions and parameters of the methods. Additional comments are also added for private methods created when breaking the large functions into small reusable utilities.
+
+A major drawback I made when developing this project was commenting out unused code. It caused multiple large blocks of unused codes, and it not only makes the codebase harder to understand, but also preventing the effectiveness of actual comments. Therefore, the first commit I made was to remove them.
