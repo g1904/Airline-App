@@ -30,13 +30,15 @@ public class SearchActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void searchFlights(View view) {
         try {
-            String airlineName = "";
-            String src = "";
-            String dest = "";
+            String airlineName = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_airline_name_input)).getText(), "Airline name is required.").toString();
+            if (airlineName.equals("")) throw new IllegalArgumentException("Airline name is required.");
+            String src = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_departure_airport_input)).getText(), "Departure airport code is required.").toString();
+            if (src.equals("")) throw new IllegalArgumentException("Departure airport code is required.");
+            String dest = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_arrival_airport_input)).getText(), "Arrival airport code is required.").toString();
+            if (dest.equals("")) throw new IllegalArgumentException("Arrival airport code is required.");
+            Parser.verifyAirports(src, dest);
 
-            getInfo(airlineName, src, dest);
             File airlineFile = getFile(airlineName);
-
             if (airlineFile == null) {
                 Intent intent = new Intent( this, FlightsActivity.class);
                 startActivity(intent);
@@ -89,15 +91,5 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
         return airlineFile;
-    }
-
-    private void getInfo(String airlineName, String src, String dest) {
-        airlineName = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_airline_name_input)).getText(), "Airline name is required.").toString();
-        if (airlineName.equals("")) throw new IllegalArgumentException("Airline name is required.");
-        src = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_departure_airport_input)).getText(), "Departure airport code is required.").toString();
-        if (src.equals("")) throw new IllegalArgumentException("Departure airport code is required.");
-        dest = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_arrival_airport_input)).getText(), "Arrival airport code is required.").toString();
-        if (dest.equals("")) throw new IllegalArgumentException("Arrival airport code is required.");
-        Parser.verifyAirports(src, dest);
     }
 }
