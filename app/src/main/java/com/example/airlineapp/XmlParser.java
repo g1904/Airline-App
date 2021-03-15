@@ -23,6 +23,9 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
 
     private final String xmlFile;
 
+    /*
+     * Parses a xml string and returns an airline.
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static Airline<Flight> getAirline(String xml) throws ParserException {
         if (xml == null) return null;
@@ -52,7 +55,7 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
     }
 
     /**
-     * Parses some source and returns an airline.
+     * Parses some source in xmlFile and returns an airline.
      *
      * @throws ParserException If the source is malformatted.
      */

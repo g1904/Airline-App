@@ -17,6 +17,22 @@ public class Parser {
     private String searchSrc;
     private String searchDest;
 
+    /**
+     * parse the command line arguments into organized data
+     * @throws  IllegalArgumentException
+     *          when invalid option occurs or the file name is missing
+     */
+    public Parser(String[] input) throws IllegalArgumentException {
+        String[] args = new String[input.length];
+        int index = parseOptions(input);
+        verifyArgs(index);
+
+        if (index > 0) {
+            this.args = new String[index];
+            System.arraycopy(args, 0, this.args, 0, index);
+        } else this.args = new String[1];
+
+    }
 
     /**
      * get the array of flight info
@@ -37,23 +53,6 @@ public class Parser {
     public String getSearchAirline() { return searchAirline; }
     public String getSearchSrc() { return searchSrc; }
     public String getSearchDest() { return searchDest; }
-
-    /**
-     * parse the command line arguments into organized data
-     * @throws  IllegalArgumentException
-     *          when invalid option occurs or the file name is missing
-     */
-    public Parser(String[] input) throws IllegalArgumentException {
-        String[] args = new String[input.length];
-        int index = parseOptions(input);
-        verifyArgs(index);
-
-        if (index > 0) {
-            this.args = new String[index];
-            System.arraycopy(args, 0, this.args, 0, index);
-        } else this.args = new String[1];
-
-    }
 
     // verify the options are shown in correct combinations
     private void verifyArgs(int index) {

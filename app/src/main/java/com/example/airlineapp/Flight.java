@@ -18,84 +18,10 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
   private Integer flightNumber;
   private String src; // three-letter airport code, departure
   private Calendar depart_date;
-  private String dest;
-  private Calendar arrive_date; // three-letter airport code, arrival
+  private String dest; // three-letter airport code, arrival
+  private Calendar arrive_date;
   private final DateFormat dateFormatter =
           DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-
-    /**
-   * Returns a number that uniquely identifies this flight.
-   * @return unique flight number
-   */
-  @Override
-  public int getNumber() {
-    return flightNumber;
-  }
-
-  /**
-   * Returns the three-letter code of the airport at which this flight
-   * originates.
-   * @return departure airport code
-   */
-  @Override
-  public String getSource() {
-    return AirportNames.getName(src);
-  }
-  public String getSrc() { return src; }
-
-  /**
-   * Returns a textual representation of this flight's departure
-   * time.
-   * @return departure date and time
-   */
-  @Override
-  public String getDepartureString() {
-    return dateFormatter.format(depart_date.getTime());
-  }
-
-  /**
-   * Returns the three-letter code of the airport at which this flight
-   * terminates.
-   * @return arrival airport code
-   */
-  @Override
-  public String getDestination() {
-    return AirportNames.getName(dest);
-  }
-
-  /**
-   * Returns a textual representation of this flight's arrival time.
-   * @return arrival date and time
-   */
-  @Override
-  public String getArrivalString() {
-    return dateFormatter.format(arrive_date.getTime());
-  }
-  public String getDest() { return dest; }
-
-  /**
-   * Returns this flight's departure time as a <code>Date</code>.
-   * @return departure date and time
-   */
-  @Override
-  public Date getDeparture() {
-    return depart_date.getTime();
-  }
-
-  /**
-   * Returns this flight's arrival time as a <code>Date</code>.
-   * @return arrival date and time
-   */
-  @Override
-  public Date getArrival() {
-    return arrive_date.getTime();
-  }
-
-  /**
-   * Returns the airline name this flight belongs to.
-   * @return airline name
-   */
-  public String getAirline() { return airline; }
 
   /**
    * Creates a new <code>Flight</code>
@@ -109,7 +35,9 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
    */
   public Flight(String[] args, Boolean toString) {
     flight_info = args;
+    // 24hr time format expected args length
     int hr24Time = 8;
+    // 12hr time format expected args length
     int hr12Time = 10;
 
     if ((args.length > hr12Time) || (args.length == 9))
@@ -131,94 +59,6 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     }
 
     if (toString) System.out.println(this.toString());
-  }
-
-  /**
-   * return the string of original flight info
-   */
-  public String dump() {
-    StringBuilder result = new StringBuilder(flight_info[0]);
-    for (int i = 1; i < flight_info.length; i++)
-      result.append(" ").append(flight_info[i]);
-    return result.toString();
-  }
-
-  /**
-   * Compares this object with the specified object for order.  Returns a
-   * negative integer, zero, or a positive integer as this object is less
-   * than, equal to, or greater than the specified object.
-   *
-   * <p>The implementor must ensure
-   * {@code sgn(x.compareTo(y)) == -sgn(y.compareTo(x))}
-   * for all {@code x} and {@code y}.  (This
-   * implies that {@code x.compareTo(y)} must throw an exception iff
-   * {@code y.compareTo(x)} throws an exception.)
-   *
-   * <p>The implementor must also ensure that the relation is transitive:
-   * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
-   * {@code x.compareTo(z) > 0}.
-   *
-   * <p>Finally, the implementor must ensure that {@code x.compareTo(y)==0}
-   * implies that {@code sgn(x.compareTo(z)) == sgn(y.compareTo(z))}, for
-   * all {@code z}.
-   *
-   * <p>It is strongly recommended, but <i>not</i> strictly required that
-   * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
-   * class that implements the {@code Comparable} interface and violates
-   * this condition should clearly indicate this fact.  The recommended
-   * language is "Note: this class has a natural ordering that is
-   * inconsistent with equals."
-   *
-   * <p>In the foregoing description, the notation
-   * {@code sgn(}<i>expression</i>{@code )} designates the mathematical
-   * <i>signum</i> function, which is defined to return one of {@code -1},
-   * {@code 0}, or {@code 1} according to whether the value of
-   * <i>expression</i> is negative, zero, or positive, respectively.
-   *
-   * @param o the object to be compared.
-   * @return a negative integer, zero, or a positive integer as this object
-   * is less than, equal to, or greater than the specified object.
-   * @throws NullPointerException if the specified object is null
-   * @throws ClassCastException   if the specified object's type prevents it
-   *                              from being compared to this object.
-   */
-  @Override
-  public int compareTo(AbstractFlight o) {
-    if (o == null) throw new NullPointerException("Can't compare flight to null");
-    Flight obj = (Flight) o;
-    int differ = this.src.compareTo(obj.src);
-    if (differ != 0) return differ;
-    differ = this.getDeparture().compareTo(obj.getDeparture());
-    return differ;
-  }
-
-  private String duration() {
-    long differ = TimeUnit.MILLISECONDS.toMinutes
-            (arrive_date.getTimeInMillis() - depart_date.getTimeInMillis());
-    return "\t\tThe duration of this flight is: " + differ + " minutes.";
-  }
-
-  public String prettyPrint() {
-    return this.toString() + this.duration();
-  }
-
-  public String xml() {
-    return "  <flight>\n" + "    <number>" + flightNumber + "</number>\n"
-            + "    <src>" + src + "</src>\n" + "    <depart>\n"
-            + "      <date day=\"" + depart_date.get(Calendar.DAY_OF_MONTH) + "\" month=\""
-            + depart_date.get(Calendar.MONTH) + "\" year=\""
-            + depart_date.get(Calendar.YEAR) + "\"/>\n"
-            + "      <time hour=\"" + depart_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\""
-            + depart_date.get(Calendar.MINUTE) + "\"/>\n"
-            + "    </depart>\n"
-            + "    <dest>" + dest + "</dest>\n"
-            + "    <arrive>\n"
-            + "      <date day=\"" + arrive_date.get(Calendar.DAY_OF_MONTH) + "\" month=\""
-            + arrive_date.get(Calendar.MONTH) + "\" year=\"" + arrive_date.get(Calendar.YEAR)
-            + "\"/>\n"
-            + "      <time hour=\"" + arrive_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\""
-            + arrive_date.get(Calendar.MINUTE) + "\"/>\n"
-            + "    </arrive>\n" + "  </flight>\n";
   }
 
   private void setAirline() {
@@ -537,6 +377,168 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
 
     long differ = this.arrive_date.getTimeInMillis() - this.depart_date.getTimeInMillis();
     if (differ < 0) throw new IllegalArgumentException("This flight travels back in time.");
+  }
+
+    /**
+   * Returns a number that uniquely identifies this flight.
+   * @return unique flight number
+   */
+  @Override
+  public int getNumber() {
+    return flightNumber;
+  }
+
+  /**
+   * Returns the three-letter code of the airport at which this flight
+   * originates.
+   * @return departure airport code
+   */
+  @Override
+  public String getSource() {
+    return AirportNames.getName(src);
+  }
+  public String getSrc() { return src; }
+
+  /**
+   * Returns a textual representation of this flight's departure
+   * time.
+   * @return departure date and time
+   */
+  @Override
+  public String getDepartureString() {
+    return dateFormatter.format(depart_date.getTime());
+  }
+
+  /**
+   * Returns the three-letter code of the airport at which this flight
+   * terminates.
+   * @return arrival airport code
+   */
+  @Override
+  public String getDestination() {
+    return AirportNames.getName(dest);
+  }
+
+  /**
+   * Returns a textual representation of this flight's arrival time.
+   * @return arrival date and time
+   */
+  @Override
+  public String getArrivalString() {
+    return dateFormatter.format(arrive_date.getTime());
+  }
+  public String getDest() { return dest; }
+
+  /**
+   * Returns this flight's departure time as a <code>Date</code>.
+   * @return departure date and time
+   */
+  @Override
+  public Date getDeparture() {
+    return depart_date.getTime();
+  }
+
+  /**
+   * Returns this flight's arrival time as a <code>Date</code>.
+   * @return arrival date and time
+   */
+  @Override
+  public Date getArrival() {
+    return arrive_date.getTime();
+  }
+
+  /**
+   * Returns the airline name this flight belongs to.
+   * @return airline name
+   */
+  public String getAirline() { return airline; }
+
+  /**
+   * return the string of original flight info
+   */
+  public String dump() {
+    StringBuilder result = new StringBuilder(flight_info[0]);
+    for (int i = 1; i < flight_info.length; i++)
+      result.append(" ").append(flight_info[i]);
+    return result.toString();
+  }
+
+  /**
+   * Compares this object with the specified object for order.  Returns a
+   * negative integer, zero, or a positive integer as this object is less
+   * than, equal to, or greater than the specified object.
+   *
+   * <p>The implementor must ensure
+   * {@code sgn(x.compareTo(y)) == -sgn(y.compareTo(x))}
+   * for all {@code x} and {@code y}.  (This
+   * implies that {@code x.compareTo(y)} must throw an exception iff
+   * {@code y.compareTo(x)} throws an exception.)
+   *
+   * <p>The implementor must also ensure that the relation is transitive:
+   * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
+   * {@code x.compareTo(z) > 0}.
+   *
+   * <p>Finally, the implementor must ensure that {@code x.compareTo(y)==0}
+   * implies that {@code sgn(x.compareTo(z)) == sgn(y.compareTo(z))}, for
+   * all {@code z}.
+   *
+   * <p>It is strongly recommended, but <i>not</i> strictly required that
+   * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
+   * class that implements the {@code Comparable} interface and violates
+   * this condition should clearly indicate this fact.  The recommended
+   * language is "Note: this class has a natural ordering that is
+   * inconsistent with equals."
+   *
+   * <p>In the foregoing description, the notation
+   * {@code sgn(}<i>expression</i>{@code )} designates the mathematical
+   * <i>signum</i> function, which is defined to return one of {@code -1},
+   * {@code 0}, or {@code 1} according to whether the value of
+   * <i>expression</i> is negative, zero, or positive, respectively.
+   *
+   * @param o the object to be compared.
+   * @return a negative integer, zero, or a positive integer as this object
+   * is less than, equal to, or greater than the specified object.
+   * @throws NullPointerException if the specified object is null
+   * @throws ClassCastException   if the specified object's type prevents it
+   *                              from being compared to this object.
+   */
+  @Override
+  public int compareTo(AbstractFlight o) {
+    if (o == null) throw new NullPointerException("Can't compare flight to null");
+    Flight obj = (Flight) o;
+    int differ = this.src.compareTo(obj.src);
+    if (differ != 0) return differ;
+    differ = this.getDeparture().compareTo(obj.getDeparture());
+    return differ;
+  }
+
+  private String duration() {
+    long differ = TimeUnit.MILLISECONDS.toMinutes
+            (arrive_date.getTimeInMillis() - depart_date.getTimeInMillis());
+    return "\t\tThe duration of this flight is: " + differ + " minutes.";
+  }
+
+  public String prettyPrint() {
+    return this.toString() + this.duration();
+  }
+
+  public String xml() {
+    return "  <flight>\n" + "    <number>" + flightNumber + "</number>\n"
+            + "    <src>" + src + "</src>\n" + "    <depart>\n"
+            + "      <date day=\"" + depart_date.get(Calendar.DAY_OF_MONTH) + "\" month=\""
+            + depart_date.get(Calendar.MONTH) + "\" year=\""
+            + depart_date.get(Calendar.YEAR) + "\"/>\n"
+            + "      <time hour=\"" + depart_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\""
+            + depart_date.get(Calendar.MINUTE) + "\"/>\n"
+            + "    </depart>\n"
+            + "    <dest>" + dest + "</dest>\n"
+            + "    <arrive>\n"
+            + "      <date day=\"" + arrive_date.get(Calendar.DAY_OF_MONTH) + "\" month=\""
+            + arrive_date.get(Calendar.MONTH) + "\" year=\"" + arrive_date.get(Calendar.YEAR)
+            + "\"/>\n"
+            + "      <time hour=\"" + arrive_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\""
+            + arrive_date.get(Calendar.MINUTE) + "\"/>\n"
+            + "    </arrive>\n" + "  </flight>\n";
   }
 
 }

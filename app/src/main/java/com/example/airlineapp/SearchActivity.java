@@ -59,14 +59,6 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void errorMessage(Exception e) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(e.getMessage() + "\nPlease try again.");
-        builder.setPositiveButton("Okay", (dialog, which) -> {});
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
     // get the search results in an airline object
     private Airline<Flight> getResult(File airlineFile, String airlineName, String src, String dest)
             throws IOException, ParserException {
@@ -100,5 +92,13 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
         return airlineFile;
+    }
+
+    private void errorMessage(Exception e) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(e.getMessage() + "\nPlease try again.");
+        builder.setPositiveButton("Okay", (dialog, which) -> {});
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
