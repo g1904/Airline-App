@@ -55,6 +55,7 @@ public class Parser {
 
     }
 
+    // verify the options are shown in correct combinations
     private void verifyArgs(int index) {
         if (options.contains("-search") && !options.contains("-host"))
             throw new IllegalArgumentException("-seach must be used with a host.");
@@ -77,6 +78,7 @@ public class Parser {
         }
     }
 
+    // make sure the three-letter airport code is legit
     public static void verifyAirports(String src, String dest) {
         if (dest.length() == 3) {
             for (int i = 0; i < 3; i++) {
@@ -98,6 +100,7 @@ public class Parser {
             throw new IllegalArgumentException("-search: Invalid departure airport.");
     }
 
+    // filter the options from all the args and make sure they are followed by the required args
     private int parseOptions(String[] input) {
         options = new LinkedList<>();
         int index = 0;

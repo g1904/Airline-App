@@ -16,10 +16,10 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
   private final String[] flight_info;
   private String airline;
   private Integer flightNumber;
-  private String src;
+  private String src; // three-letter airport code, departure
   private Calendar depart_date;
   private String dest;
-  private Calendar arrive_date;
+  private Calendar arrive_date; // three-letter airport code, arrival
   private final DateFormat dateFormatter =
           DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
@@ -246,6 +246,7 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       throw new IllegalArgumentException("Invalid departure airport.");
   }
 
+  // set the depart_date if the input format is "hh:mm" (24-hr format)
   private void setDepart_date24() {
     String[] parts1 = flight_info[3].split("/");
     Integer[] d_date = new Integer[3];
@@ -300,6 +301,7 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     this.depart_date.set(Calendar.SECOND, 0);
   }
 
+  // set the Dest if the date is "hh:mm" (24-hr format)
   private void setDest24() {
     if (flight_info[5].length() == 3) {
       for (int i = 0; i < 3; i++) {
@@ -313,6 +315,7 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       throw new IllegalArgumentException("Invalid arrival airport.");
   }
 
+  // set the arrive_date if the input format is "hh:mm" (24-hr format)
   private void setArrive_date24() {
     String[] parts3 = flight_info[6].split("/");
     Integer[] a_date = new Integer[3];
@@ -370,6 +373,7 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     if (differ < 0) throw new IllegalArgumentException("This flight travels back in time.");
   }
 
+  // set the depart_date if the input format is "hh:mm AM/PM" (12-hr format)
   private void setDepart_date12() {
     boolean ifAM;
     String[] parts1 = flight_info[3].split("/");
@@ -442,6 +446,7 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     this.depart_date.set(Calendar.SECOND, 0);
   }
 
+  // set the Dest if the input format of the dates is "hh:mm AM/PM" (12-hr format)
   private void setDest12() {
     if (flight_info[6].length() == 3) {
       for (int i = 0; i < 3; i++) {
@@ -455,6 +460,7 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       throw new IllegalArgumentException("Invalid arrival airport.");
   }
 
+  // set the arrive_date if the input format is "hh:mm AM/PM" (12-hr format)
   private void setArrive_date12() {
     boolean ifAM;
     String[] parts3 = flight_info[7].split("/");

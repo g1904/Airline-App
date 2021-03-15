@@ -67,6 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         alert.show();
     }
 
+    // get the search results in an airline object
     private Airline<Flight> getResult(File airlineFile, String airlineName, String src, String dest)
             throws IOException, ParserException {
         Airline<Flight> searchResult;
@@ -87,6 +88,7 @@ public class SearchActivity extends AppCompatActivity {
         return searchResult;
     }
 
+    // get all the locally saved airline files
     private File getFile(String airlineName) {
         File directory = getDir(getResources().getString(R.string.dirName), MODE_PRIVATE);
         File[] airlines = directory.listFiles();
