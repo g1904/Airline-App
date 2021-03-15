@@ -30,3 +30,10 @@ The flight info will be displayed in a more readable manner.
 
 You can also search for flights from the same airline that travel from target airport to target airport.
 The search result will show these flights in a more readable manner as well.
+
+# Code Review Notes
+I think the namings of fields and methods are meaningful, and the errors are all thrown with correct names and caught.
+
+Many functions that include format checking and XML parsing features were extremely lengthy, and there were some duplications caused by copy-pasting the same code and modifying on top of that.
+
+Since we used to use the maven site feature to configures some codebase reports and analysis, the comments explain the functions and parameters of the methods. Additional comments are also added for private methods created when breaking the large functions into small reusable utilities.
