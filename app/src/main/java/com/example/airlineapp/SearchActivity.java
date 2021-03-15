@@ -30,51 +30,74 @@ public class SearchActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void searchFlights(View view) {
         try {
-            String airlineName = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_airline_name_input)).getText(), "Airline name is required.").toString();
-            if (airlineName.equals("")) throw new IllegalArgumentException("Airline name is required.");
-            String src = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_departure_airport_input)).getText(), "Departure airport code is required.").toString();
-            if (src.equals("")) throw new IllegalArgumentException("Departure airport code is required.");
-            String dest = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_arrival_airport_input)).getText(), "Arrival airport code is required.").toString();
-            if (dest.equals("")) throw new IllegalArgumentException("Arrival airport code is required.");
-            Parser.verify(src, dest);
-            File directory = getDir(getResources().getString(R.string.dirName), MODE_PRIVATE);
-            File[] airlines = directory.listFiles();
-            Airline<Flight> searchResult;
-            File airlineFile = null;
-            if (airlines != null) {
-                for (File temp : airlines) {
-                    if (temp.getName().equals(airlineName.toLowerCase() + ".xml"))
-                        airlineFile = temp;
-                }
-            }
+            String airlineName = "";
+            String src = "";
+            String dest = "";
+
+            getInfo(airlineName, src, dest);
+            File airlineFile = getFile(airlineName);
+
             if (airlineFile == null) {
                 Intent intent = new Intent( this, FlightsActivity.class);
                 startActivity(intent);
             } else {
-                searchResult = new Airline<>(airlineName);
-                BufferedReader reader = new BufferedReader(new FileReader(airlineFile.getAbsolutePath()));
-                StringBuilder stringBuilder = new StringBuilder();
-                char[] buffer = new char[10];
-                while (reader.read(buffer) != -1) {
-                    stringBuilder.append(new String(buffer));
-                    buffer = new char[10];
-                }
-                reader.close();
-                String xml = stringBuilder.toString();
-                for (Flight flight : Objects.requireNonNull(XmlParser.getAirline(xml)).getFlights()) {
-                    if (flight.getSrc().equalsIgnoreCase(src) && flight.getDest().equalsIgnoreCase(dest))
-                        searchResult.addFlight(flight);
-                }
+                Airline<Flight> searchResult = getResult(airlineFile, airlineName, src, dest);
                 Intent intent = new Intent( this, FlightsActivity.class);
                 intent.putExtra("xml", XmlDumper.getXml(searchResult));
                 startActivity(intent);
             }
         } catch (IllegalArgumentException | NullPointerException | IOException | ParserException e) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(e.getMessage() + "\nPlease try again.");
-            builder.setPositiveButton("Okay", (dialog, which) -> {});
-            AlertDialog alert = builder.create();
-            alert.show();
+            errorMessage(e);
         }
+    }
+
+    private void errorMessage(Exception e) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(e.getMessage() + "\nPlease try again.");
+        builder.setPositiveButton("Okay", (dialog, which) -> {});
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private Airline<Flight> getResult(File airlineFile, String airlineName, String src, String dest) throws IOException, ParserException {
+        Airline<Flight> searchResult;
+        searchResult = new Airline<>(airlineName);
+        BufferedReader reader = new BufferedReader(new FileReader(airlineFile.getAbsolutePath()));
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] buffer = new char[10];
+        while (reader.read(buffer) != -1) {
+            stringBuilder.append(new String(buffer));
+            buffer = new char[10];
+        }
+        reader.close();
+        String xml = stringBuilder.toString();
+        for (Flight flight : Objects.requireNonNull(XmlParser.getAirline(xml)).getFlights()) {
+            if (flight.getSrc().equalsIgnoreCase(src) && flight.getDest().equalsIgnoreCase(dest))
+                searchResult.addFlight(flight);
+        }
+        return searchResult;
+    }
+
+    private File getFile(String airlineName) {
+        File directory = getDir(getResources().getString(R.string.dirName), MODE_PRIVATE);
+        File[] airlines = directory.listFiles();
+        File airlineFile = null;
+        if (airlines != null) {
+            for (File temp : airlines) {
+                if (temp.getName().equals(airlineName.toLowerCase() + ".xml"))
+                    airlineFile = temp;
+            }
+        }
+        return airlineFile;
+    }
+
+    private void getInfo(String airlineName, String src, String dest) {
+        airlineName = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_airline_name_input)).getText(), "Airline name is required.").toString();
+        if (airlineName.equals("")) throw new IllegalArgumentException("Airline name is required.");
+        src = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_departure_airport_input)).getText(), "Departure airport code is required.").toString();
+        if (src.equals("")) throw new IllegalArgumentException("Departure airport code is required.");
+        dest = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.search_arrival_airport_input)).getText(), "Arrival airport code is required.").toString();
+        if (dest.equals("")) throw new IllegalArgumentException("Arrival airport code is required.");
+        Parser.verifyAirports(src, dest);
     }
 }

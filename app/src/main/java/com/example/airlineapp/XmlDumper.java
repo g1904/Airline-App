@@ -13,6 +13,7 @@ import java.util.Collection;
 public class XmlDumper implements AirlineDumper<Airline<Flight>> {
 
     private final String xmlFile;
+    public XmlDumper(String xmlFile) { this.xmlFile = xmlFile; }
 
     public static String getXml(Airline<Flight> airline) {
         if (airline == null)
@@ -53,7 +54,5 @@ public class XmlDumper implements AirlineDumper<Airline<Flight>> {
             throw new IOException("Something went wrong while writing the airline to xml file.");
         }
     }
-
-    public XmlDumper(String xmlFile) { this.xmlFile = xmlFile; }
 
 }

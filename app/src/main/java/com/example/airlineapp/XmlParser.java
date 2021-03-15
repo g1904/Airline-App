@@ -112,95 +112,60 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
                     args[2] = root.getChildNodes().item(i).getFirstChild().getNodeValue();
                     break;
                 case "depart":
-                    String yrD = null, monthD = null, dayD = null, hrD = null, minD = null;
-                    NodeList date_time_d = root.getChildNodes().item(i).getChildNodes();
-                    for (int j = 0; j < date_time_d.getLength(); j++) {
-                        Node node = date_time_d.item(j);
-                        switch (node.getNodeName()) {
-                            case "date":
-                                NamedNodeMap date_d = node.getAttributes();
-                                for (int k = 0; k < date_d.getLength(); k++) {
-                                    Node attr_d = date_d.item(k);
-                                    switch (attr_d.getNodeName()) {
-                                        case "day":
-                                            dayD = attr_d.getNodeValue();
-                                            break;
-                                        case "month":
-                                            monthD = Integer.toString(Integer.parseInt(attr_d.getNodeValue()) + 1);
-                                            break;
-                                        case "year":
-                                            yrD = attr_d.getNodeValue();
-                                            break;
-                                    }
-                                }
-                                break;
-                            case "time":
-                                NamedNodeMap time_d = node.getAttributes();
-                                for (int k = 0; k < time_d.getLength(); k++) {
-                                    Node attr_d = time_d.item(k);
-                                    switch (attr_d.getNodeName()) {
-                                        case "hour":
-                                            hrD = attr_d.getNodeValue();
-                                            break;
-                                        case "minute":
-                                            minD = attr_d.getNodeValue();
-                                            break;
-                                    }
-                                }
-                                break;
-                        }
-                    }
-                    args[3] = monthD + "/" + dayD + "/" + yrD;
-                    args[4] = hrD + ":" + minD;
+                    parse_date_time(args, root, i, 3, 4);
                     break;
                 case "dest":
                     args[5] = root.getChildNodes().item(i).getFirstChild().getNodeValue();
                     break;
                 case "arrive":
-                    String yrA = null, monthA = null, dayA = null, hrA = null, minA = null;
-                    NodeList date_time_a = root.getChildNodes().item(i).getChildNodes();
-                    for (int l = 0; l < date_time_a.getLength(); l++) {
-                        Node node = date_time_a.item(l);
-                        switch (node.getNodeName()) {
-                            case "date":
-                                NamedNodeMap date_a = node.getAttributes();
-                                for (int k = 0; k < date_a.getLength(); k++) {
-                                    Node attr_a = date_a.item(k);
-                                    switch (attr_a.getNodeName()) {
-                                        case "day":
-                                            dayA = attr_a.getNodeValue();
-                                            break;
-                                        case "month":
-                                            monthA = Integer.toString(Integer.parseInt(attr_a.getNodeValue()) + 1);
-                                            break;
-                                        case "year":
-                                            yrA = attr_a.getNodeValue();
-                                            break;
-                                    }
-                                }
-                                break;
-                            case "time":
-                                NamedNodeMap time_a = node.getAttributes();
-                                for (int k = 0; k < time_a.getLength(); k++) {
-                                    Node attr = time_a.item(k);
-                                    switch (attr.getNodeName()) {
-                                        case "hour":
-                                            hrA = attr.getNodeValue();
-                                            break;
-                                        case "minute":
-                                            minA = attr.getNodeValue();
-                                            break;
-                                    }
-                                }
-                                break;
-                        }
-                    }
-                    args[6] = monthA + "/" + dayA + "/" + yrA;
-                    args[7] = hrA + ":" + minA;
+                    parse_date_time(args, root, i, 6, 7);
                     break;
             }
         }
         return new Flight(args, false);
+    }
+
+    private static void parse_date_time(String[] args, Element root , int i , int date_position, int time_position) {
+        String yr = null, month = null, day = null, hr = null, min = null;
+        NodeList date_time = root.getChildNodes().item(i).getChildNodes();
+        for (int j = 0; j < date_time.getLength(); j++) {
+            Node node = date_time.item(j);
+            switch (node.getNodeName()) {
+                case "date":
+                    NamedNodeMap date = node.getAttributes();
+                    for (int k = 0; k < date.getLength(); k++) {
+                        Node attr = date.item(k);
+                        switch (attr.getNodeName()) {
+                            case "day":
+                                day = attr.getNodeValue();
+                                break;
+                            case "month":
+                                month = Integer.toString(Integer.parseInt(attr.getNodeValue()) + 1);
+                                break;
+                            case "year":
+                                yr = attr.getNodeValue();
+                                break;
+                        }
+                    }
+                    break;
+                case "time":
+                    NamedNodeMap time = node.getAttributes();
+                    for (int k = 0; k < time.getLength(); k++) {
+                        Node attr = time.item(k);
+                        switch (attr.getNodeName()) {
+                            case "hour":
+                                hr = attr.getNodeValue();
+                                break;
+                            case "minute":
+                                min = attr.getNodeValue();
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+        args[date_position] = month + "/" + day + "/" + yr;
+        args[time_position] = hr + ":" + min;
     }
 
     public XmlParser(String xmlFile) { this.xmlFile = xmlFile; }
