@@ -33,26 +33,9 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
 
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            //factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new MySAXHandler());
-            /*
-            builder.setErrorHandler(
-                    new ErrorHandler() {
-                        public void warning(SAXParseException e) throws SAXException {
-                            throw new SAXException("WARNING : " + e.getMessage());
-                        }
 
-                        public void error(SAXParseException e) throws SAXException {
-                           throw new SAXException("ERROR : " + e.getMessage());
-                        }
-
-                        public void fatalError(SAXParseException e) throws SAXException {
-                            throw new SAXException("FATAL : " + e.getMessage());
-                        }
-                    }
-            );
-             */
             doc = builder.parse(inputStream);
             Element root = null;
             for (int i = 0; i < doc.getChildNodes().getLength(); i++) {
@@ -68,17 +51,6 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
         return airline;
     }
 
-    /*
-    public void warning(SAXParseException ex) throws ParserConfigurationException {
-        throw new ParserConfigurationException("WARNING: " + ex.getMessage());
-    }
-    public void error(SAXParseException ex) throws ParserConfigurationException {
-        throw new ParserConfigurationException("ERROR: " + ex.getMessage());
-    }
-    public void fatalError(SAXParseException ex) throws ParserConfigurationException {
-        throw new ParserConfigurationException("FATAL: " + ex.getMessage());
-    } */
-
     /**
      * Parses some source and returns an airline.
      *
@@ -92,26 +64,8 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
 
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            //factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new MySAXHandler());
-            /*
-            builder.setErrorHandler(
-                    new ErrorHandler() {
-                        public void warning(SAXParseException e) throws SAXException {
-                            throw new SAXException("WARNING : " + e.getMessage());
-                        }
-
-                        public void error(SAXParseException e) throws SAXException {
-                           throw new SAXException("ERROR : " + e.getMessage());
-                        }
-
-                        public void fatalError(SAXParseException e) throws SAXException {
-                            throw new SAXException("FATAL : " + e.getMessage());
-                        }
-                    }
-            );
-             */
             File file = new File(xmlFile);
             if (!file.exists()) {
                 create = file.createNewFile();
@@ -134,19 +88,8 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
 
     private static Airline<Flight> parse_airline(Element root) {
         NodeList children = root.getChildNodes();
-        //Airline<Flight> airline = new Airline<>(children.item(1).getNodeValue());
-        // Airline<Flight> airline = new Airline<>("x");
-        // NodeList flights = (NodeList) children.item(2);
         Airline<Flight> airline;
-        //Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        //StringWriter writer = new StringWriter();
-        //if (!(children.item(1) instanceof Element)) return null;
-        //if (!("name".equals(children.item(1).getNodeName()))) throw new IllegalArgumentException("Airline Name required.");
-        //transformer.transform(new DOMSource(children.item(1).getFirstChild()), new StreamResult(writer));
-        //airline = new Airline<>(writer.toString());
         airline = new Airline<>(children.item(1).getFirstChild().getNodeValue());
-        //writer.close();
-        //throw new IllegalArgumentException(airline.getName());
         for (int f = 1; f < children.getLength(); f++) {
             if (!(children.item(f) instanceof Element)) continue;
             if ("flight".equals(children.item(f).getNodeName())) {
@@ -159,19 +102,13 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
     private static Flight parse_flight(Element root, String airlineName) {
         String[] args = new String[8];
         args[0] = airlineName;
-        //Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        //StringWriter writer = new StringWriter();
         for (int i = 0; i < root.getChildNodes().getLength(); i++) {
             if (!(root.getChildNodes().item(i) instanceof Element)) continue;
             switch (root.getChildNodes().item(i).getNodeName()) {
                 case "number":
-                    //transformer.transform(new DOMSource(root.getFirstChild()), new StreamResult(writer));
-                    //args[1] = writer.toString();
                     args[1] = root.getChildNodes().item(i).getFirstChild().getNodeValue();
                     break;
                 case "src":
-                    //transformer.transform(new DOMSource(root.getFirstChild()), new StreamResult(writer));
-                    //args[2] = writer.toString();
                     args[2] = root.getChildNodes().item(i).getFirstChild().getNodeValue();
                     break;
                 case "depart":
@@ -217,8 +154,6 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
                     args[4] = hrD + ":" + minD;
                     break;
                 case "dest":
-                    //transformer.transform(new DOMSource(root.getFirstChild()), new StreamResult(writer));
-                    //args[5] = writer.toString();
                     args[5] = root.getChildNodes().item(i).getFirstChild().getNodeValue();
                     break;
                 case "arrive":
@@ -265,8 +200,6 @@ public class XmlParser implements AirlineParser<Airline<Flight>> {
                     break;
             }
         }
-        //writer.close();
-        //throw new IllegalArgumentException(args[1]);
         return new Flight(args, false);
     }
 

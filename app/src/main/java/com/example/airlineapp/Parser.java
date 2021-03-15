@@ -55,30 +55,6 @@ public class Parser {
                     case "-search":
                         options.add(input[i]);
                         break;
-                    /*case "-textFile":
-                        options.add(input[i]);
-                        i++;
-                        if (i < input.length)
-                            this.dumpFile = input[i];
-                        else
-                            throw new IllegalArgumentException("Missing dump-file name.");
-                        break;
-                    case "-xmlFile":
-                        options.add(input[i]);
-                        i++;
-                        if (i < input.length)
-                            this.xmlFile = input[i];
-                        else
-                            throw new IllegalArgumentException("Missing xml-file name.");
-                        break;
-                    case "-pretty":
-                        options.add(input[i]);
-                        i++;
-                        if (i < input.length)
-                            this.prettyFile = input[i];
-                        else
-                            throw new IllegalArgumentException("Missing pretty-file name.");
-                        break; */
                     case "-host":
                         options.add("-host");
                         i++;
@@ -112,9 +88,6 @@ public class Parser {
         if (options.contains("-search") && !options.contains("-host"))
             throw new IllegalArgumentException("-seach must be used with a host.");
 
-        //if (options.contains("-testFile") && options.contains("-xmlFile"))
-        //throw new IllegalArgumentException("Can't choose both -xmlFile and -textFile.");
-
         if ( (options.contains("-host") && !options.contains("-port")) || (!options.contains("-host") && options.contains("-port")) )
             throw new IllegalArgumentException("-host and -port must be both stated.");
 
@@ -130,7 +103,6 @@ public class Parser {
                 verify(searchSrc, searchDest);
             }
         }
-
 
         if (index > 0) {
             this.args = new String[index];

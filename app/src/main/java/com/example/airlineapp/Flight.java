@@ -99,176 +99,6 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
   /**
    * Creates a new <code>Flight</code>
    *
-   * @param airline
-   *        The name of the airline
-   * @param flightNumber
-   *        The flight number (unique)
-   * @param src
-   *        Three-letter code of the departure airport
-   * @param depart_date
-   *        The departure date in the format: mm/dd/yyyy
-   * @param depart_time
-   *        The departure time in 24-hr format: hh:mm
-   * @param dest
-   *        Three-letter code of the arrival airport
-   * @param arrive_date
-   *        The arrival date in the format: mm/dd/yyyy
-   * @param arrive_time
-   *        The arrival time in 24-hr format: hh:mm
-   * @param print
-   *        The option to print a description of the new flight
-   * @throws IllegalArgumentException
-   *         one of the arguments doesn't meet the requirement
-   */
-  /*public Flight(String airline, String flightNumber, String src, String depart_date, String depart_time, String dest, String arrive_date, String arrive_time, Boolean print)
-          throws IllegalArgumentException
-  {
-    flight_info = new String[] {airline, flightNumber, src, depart_date, depart_time, dest, arrive_date, arrive_time};
-    this.airline = airline;
-    try {
-      this.flightNumber = Integer.parseInt(flightNumber);
-    } catch (NumberFormatException e) {
-      throw new NumberFormatException("Invalid flight number.");
-    }
-    if (src.length() == 3) {
-      for (int i = 0; i < 3; i++) {
-        if (!Character.isLetter(src.charAt(i)))
-          throw new IllegalArgumentException("Invalid departure airport.");
-      }
-      if (AirportNames.getName(src.toUpperCase()) == null)
-        throw new IllegalArgumentException("Departure airport doesn't exist.");
-      this.src = src.toUpperCase();
-    } else
-      throw new IllegalArgumentException("Invalid departure airport.");
-    String[] parts1 = depart_date.split("/");
-    Integer[] d_date = new Integer[3];
-    if (parts1.length != 3)
-      throw new IllegalArgumentException("Invalid departure date.");
-    else {
-      for (int i = 0; i < 3; i++) {
-        try {
-          d_date[i] = Integer.parseInt(parts1[i]);
-        } catch (NumberFormatException e) {
-          throw new NumberFormatException("Invalid departure date.");
-        }
-      }
-    }
-    String[] parts2 = depart_time.split(":");
-    Integer[] d_time = new Integer[3];
-    if (parts2.length != 2)
-      throw new IllegalArgumentException("Invalid departure time.");
-    else {
-      for (int i = 0; i < 2; i++) {
-        try {
-          d_time[i] = Integer.parseInt(parts2[i]);
-        } catch (NumberFormatException e) {
-          throw new NumberFormatException("Invalid departure time.");
-        }
-      }
-    }
-    this.depart_date = new GregorianCalendar();
-    if ((d_date[2] > 999) && (d_date[2] < 10000))
-      this.depart_date.set(Calendar.YEAR, d_date[2]);
-    else
-      throw new IllegalArgumentException("Invalid departure year.");
-    if ((d_date[0] < 13) && (d_date[0] > 0))
-      this.depart_date.set(Calendar.MONTH, d_date[0] - 1);
-    else
-      throw new IllegalArgumentException("Invalid departure month.");
-    if ((d_date[1] > 0) && (d_date[1] < 32)) {
-      if ((d_date[0] == 2) && (d_date[1] > 28) && (!((d_date[1] == 29) && (new GregorianCalendar().isLeapYear(d_date[2])))))
-          throw new IllegalArgumentException("Invalid departure day.");
-      this.depart_date.set(Calendar.DAY_OF_MONTH, d_date[1]);
-    } else
-      throw new IllegalArgumentException("Invalid departure day.");
-    if ((d_time[0] >= 0) && (d_time[0] <= 24))
-      this.depart_date.set(Calendar.HOUR_OF_DAY, d_time[0]);
-    else
-      throw new IllegalArgumentException("Invalid departure hour.");
-    if ((d_time[1] >= 0) && (d_time[1] <= 59))
-      this.depart_date.set(Calendar.MINUTE, d_time[1]);
-    else
-      throw new IllegalArgumentException("Invalid departure minute.");
-    this.depart_date.set(Calendar.SECOND, 0);
-    if (dest.length() == 3) {
-      for (int i = 0; i < 3; i++) {
-        if ((!Character.isLetter(dest.charAt(i))))
-          throw new IllegalArgumentException("Invalid arrival airport.");
-      }
-      if (AirportNames.getName(dest.toUpperCase()) == null)
-        throw new IllegalArgumentException("Arrival airport doesn't exist.");
-      this.dest = dest.toUpperCase();
-    } else
-      throw new IllegalArgumentException("Invalid arrival airport.");
-    String[] parts3 = arrive_date.split("/");
-    Integer[] a_date = new Integer[3];
-    if (parts3.length != 3)
-      throw new IllegalArgumentException("Invalid arrival date.");
-    else {
-      for (int i = 0; i < 3; i++) {
-        try {
-          a_date[i] = Integer.parseInt(parts3[i]);
-        } catch (NumberFormatException e) {
-          throw new NumberFormatException("Invalid arrival date.");
-        }
-      }
-    }
-    String[] parts4 = arrive_time.split(":");
-    Integer[] a_time = new Integer[3];
-    if (parts4.length != 2)
-      throw new IllegalArgumentException("Invalid arrival time.");
-    else {
-      for (int i = 0; i < 2; i++) {
-        try {
-          a_time[i] = Integer.parseInt(parts4[i]);
-        } catch (NumberFormatException e) {
-          throw new NumberFormatException("Invalid arrival time.");
-        }
-      }
-    }
-    this.arrive_date = new GregorianCalendar();
-    if ((a_date[2] > 999) && (a_date[2] < 10000))
-      this.arrive_date.set(Calendar.YEAR, a_date[2]);
-    else
-      throw new IllegalArgumentException("Invalid arrival year.");
-    if ((a_date[0] < 13) && (a_date[0] > 0))
-      this.arrive_date.set(Calendar.MONTH, a_date[0]-1);
-    else
-      throw new IllegalArgumentException("Invalid arrival month.");
-    if ((a_date[1] > 0) && (a_date[1] < 32)) {
-      if ((a_date[0] == 2) && (a_date[1] > 28) && (!((a_date[1] == 29) && (new GregorianCalendar().isLeapYear(a_date[2])))))
-          throw new IllegalArgumentException("Invalid arrival day.");
-      this.arrive_date.set(Calendar.DAY_OF_MONTH, a_date[1]);
-    } else
-      throw new IllegalArgumentException("Invalid arrival day.");
-    if ((a_time[0] >= 0) && (a_time[0] <= 24))
-      this.arrive_date.set(Calendar.HOUR_OF_DAY, a_time[0]);
-    else
-      throw new IllegalArgumentException("Invalid arrival hour.");
-    if ((a_time[1] >= 0) && (a_time[1] <= 59))
-      this.arrive_date.set(Calendar.MINUTE, a_time[1]);
-    else
-      throw new IllegalArgumentException("Invalid arrival minute.");
-    this.arrive_date.set(Calendar.SECOND, 0);
-
-    long differ = this.arrive_date.getTimeInMillis() - this.depart_date.getTimeInMillis();
- /* if (differ >= 0) {
-      if (differ < 600000)
-        throw new IllegalArgumentException("This flight's duration is too short.");
-      else if (differ > 172800000)
-        throw new IllegalArgumentException("This flight's duration is too long.");
-    } else
-      throw new IllegalArgumentException("This flight travels back in time.");
-    if (differ < 0) throw new IllegalArgumentException("This flight travels back in time.");
-
-    if (print) System.out.println(this.toString());
-  }
-  */
-
-
-  /**
-   * Creates a new <code>Flight</code>
-   *
    * @param args
    *        arguments that contains the required flight info
    * @param toString
@@ -280,15 +110,9 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     flight_info = args;
     int hr24Time = 8;
     int hr12Time = 10;
-    // int requiredArgsNumber = 10;
 
     if ((args.length > hr12Time) || (args.length == 9)) throw new IllegalArgumentException("Too many arguments.");
     if (args.length < hr24Time) throw new IllegalArgumentException("Missing command line arguments.");
-
-    //if (args.length > requiredArgsNumber) throw new IllegalArgumentException("Too many arguments.");
-    //if (args.length < requiredArgsNumber) throw new IllegalArgumentException("Missing command line arguments.");
-
-
 
     if (args.length == hr24Time) {
       this.airline = args[0];
@@ -419,13 +243,6 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       this.arrive_date.set(Calendar.SECOND, 0);
 
       long differ = this.arrive_date.getTimeInMillis() - this.depart_date.getTimeInMillis();
-    /* if (differ >= 0) {
-      if (differ < 600000)
-        throw new IllegalArgumentException("This flight's duration is too short.");
-      else if (differ > 172800000)
-        throw new IllegalArgumentException("This flight's duration is too long.");
-    } else
-      throw new IllegalArgumentException("This flight travels back in time."); */
       if (differ < 0) throw new IllegalArgumentException("This flight travels back in time.");
     } else {
 
@@ -463,11 +280,9 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       Integer[] d_time = new Integer[3];
       switch (args[5]) {
         case "AM":
-        //case "am":
           ifAM = true;
           break;
         case "PM":
-        //case "pm":
           ifAM = false;
           break;
         default:
@@ -595,13 +410,6 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       this.arrive_date.set(Calendar.SECOND, 0);
 
       long differ = this.arrive_date.getTimeInMillis() - this.depart_date.getTimeInMillis();
-    /* if (differ >= 0) {
-      if (differ < 600000)
-        throw new IllegalArgumentException("This flight's duration is too short.");
-      else if (differ > 172800000)
-        throw new IllegalArgumentException("This flight's duration is too long.");
-    } else
-      throw new IllegalArgumentException("This flight travels back in time."); */
       if (differ < 0) throw new IllegalArgumentException("This flight travels back in time.");
     }
 

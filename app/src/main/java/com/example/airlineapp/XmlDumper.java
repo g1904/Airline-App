@@ -52,46 +52,6 @@ public class XmlDumper implements AirlineDumper<Airline<Flight>> {
         } catch (IOException e) {
             throw new IOException("Something went wrong while writing the airline to xml file.");
         }
-
-
-
-        /*
-        try {
-
-
-
-            String systemID = "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd";
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            DOMImplementation dom = documentBuilder.getDOMImplementation();
-            DocumentType docType = dom.createDocumentType("airline", null, systemID);
-            Document doc = dom.createDocument(null, "airline", docType);
-
-            Element root = doc.getDocumentElement();
-            Element name = doc.createElement("name");
-            root.appendChild(name);
-            name.appendChild(doc.createTextNode(airline.getName()));
-            Element[] flights = doc.createE Element[airline.getFlights().size()];
-            root.appendChild(flights);
-            int i = 0;
-            for (Flight flight : airline.getFlights()) {
-                flights[i] = doc.createElement("flight");
-            }
-
-            Source src = new DOMSource(doc);
-            Result res = new StreamResult(new File(xmlFile));
-            TransformerFactory xFactory = TransformerFactory.newInstance();
-            Transformer xform = xFactory.newTransformer();
-            xform.setOutputProperty(OutputKeys.INDENT, "yes");
-            xform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, systemID);
-            xform.transform(src, res);
-
-
-
-        } catch (TransformerException | ParserConfigurationException e) {
-            throw new IOException("Error occurred when dumping Xml file: " + e.getMessage());
-        }
-        */
     }
 
     public XmlDumper(String xmlFile) { this.xmlFile = xmlFile; }
