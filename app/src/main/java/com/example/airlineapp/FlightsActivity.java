@@ -32,8 +32,11 @@ public class FlightsActivity extends AppCompatActivity {
             View linearLayout = findViewById(R.id.flights_linear_layout);
             TextView flights = new TextView(this);
             flights.setText(text);
-            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(ViewGroup.LayoutParams.MATCH_PARENT, 10, ViewGroup.LayoutParams.MATCH_PARENT, 10);
+            ViewGroup.MarginLayoutParams layoutParams =
+                    new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(ViewGroup.LayoutParams.MATCH_PARENT, 10,
+                    ViewGroup.LayoutParams.MATCH_PARENT, 10);
             flights.setLayoutParams(layoutParams);
             flights.setTextSize(25);
             ((LinearLayout) linearLayout).addView(flights);

@@ -41,8 +41,11 @@ public class BrowseActivity extends AppCompatActivity {
                 if (airline.getName().endsWith(".xml")) {
                     Button button = new Button(this);
                     button.setText(airline.getName().split("\\.", 2)[0]);
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(ViewGroup.LayoutParams.MATCH_PARENT, current, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    LinearLayout.LayoutParams layoutParams =
+                            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(ViewGroup.LayoutParams.MATCH_PARENT, current,
+                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     layoutParams.gravity = Gravity.CENTER;
                     button.setGravity(Gravity.CENTER);
                     button.setTextSize(20);
@@ -83,7 +86,9 @@ public class BrowseActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void searchAirline(View view) {
         try {
-            String airlineName = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.browse_search_input)).getText(), "Airline name is required.").toString();
+            String airlineName = Objects.requireNonNull((
+                    (TextInputEditText) findViewById(R.id.browse_search_input)).getText(),
+                    "Airline name is required.").toString();
             if (airlineName.equals("")) throw new IllegalArgumentException("Airline name is required.");
             File directory = getDir(getResources().getString(R.string.dirName), MODE_PRIVATE);
             File[] airlines = directory.listFiles();

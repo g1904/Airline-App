@@ -20,7 +20,8 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
   private Calendar depart_date;
   private String dest;
   private Calendar arrive_date;
-  private final DateFormat dateFormatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+  private final DateFormat dateFormatter =
+          DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
     /**
    * Returns a number that uniquely identifies this flight.
@@ -111,8 +112,10 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     int hr24Time = 8;
     int hr12Time = 10;
 
-    if ((args.length > hr12Time) || (args.length == 9)) throw new IllegalArgumentException("Too many arguments.");
-    if (args.length < hr24Time) throw new IllegalArgumentException("Missing command line arguments.");
+    if ((args.length > hr12Time) || (args.length == 9))
+      throw new IllegalArgumentException("Too many arguments.");
+    if (args.length < hr24Time)
+      throw new IllegalArgumentException("Missing command line arguments.");
 
     setAirline();
     setFlightNumber();
@@ -190,7 +193,8 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
   }
 
   private String duration() {
-    long differ = TimeUnit.MILLISECONDS.toMinutes(arrive_date.getTimeInMillis() - depart_date.getTimeInMillis());
+    long differ = TimeUnit.MILLISECONDS.toMinutes
+            (arrive_date.getTimeInMillis() - depart_date.getTimeInMillis());
     return "\t\tThe duration of this flight is: " + differ + " minutes.";
   }
 
@@ -201,13 +205,19 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
   public String xml() {
     return "  <flight>\n" + "    <number>" + flightNumber + "</number>\n"
             + "    <src>" + src + "</src>\n" + "    <depart>\n"
-            + "      <date day=\"" + depart_date.get(Calendar.DAY_OF_MONTH) + "\" month=\"" + depart_date.get(Calendar.MONTH) + "\" year=\"" + depart_date.get(Calendar.YEAR) + "\"/>\n"
-            + "      <time hour=\"" + depart_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\"" + depart_date.get(Calendar.MINUTE) + "\"/>\n"
+            + "      <date day=\"" + depart_date.get(Calendar.DAY_OF_MONTH) + "\" month=\""
+            + depart_date.get(Calendar.MONTH) + "\" year=\""
+            + depart_date.get(Calendar.YEAR) + "\"/>\n"
+            + "      <time hour=\"" + depart_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\""
+            + depart_date.get(Calendar.MINUTE) + "\"/>\n"
             + "    </depart>\n"
             + "    <dest>" + dest + "</dest>\n"
             + "    <arrive>\n"
-            + "      <date day=\"" + arrive_date.get(Calendar.DAY_OF_MONTH) + "\" month=\"" + arrive_date.get(Calendar.MONTH) + "\" year=\"" + arrive_date.get(Calendar.YEAR) + "\"/>\n"
-            + "      <time hour=\"" + arrive_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\"" + arrive_date.get(Calendar.MINUTE) + "\"/>\n"
+            + "      <date day=\"" + arrive_date.get(Calendar.DAY_OF_MONTH) + "\" month=\""
+            + arrive_date.get(Calendar.MONTH) + "\" year=\"" + arrive_date.get(Calendar.YEAR)
+            + "\"/>\n"
+            + "      <time hour=\"" + arrive_date.get(Calendar.HOUR_OF_DAY) + "\" minute=\""
+            + arrive_date.get(Calendar.MINUTE) + "\"/>\n"
             + "    </arrive>\n" + "  </flight>\n";
   }
 
@@ -273,7 +283,8 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     else
       throw new IllegalArgumentException("Invalid departure month.");
     if ((d_date[1] > 0) && (d_date[1] < 32)) {
-      if ((d_date[0] == 2) && (d_date[1] > 28) && (!((d_date[1] == 29) && (new GregorianCalendar().isLeapYear(d_date[2])))))
+      if ((d_date[0] == 2) && (d_date[1] > 28) && (!((d_date[1] == 29)
+              && (new GregorianCalendar().isLeapYear(d_date[2])))))
         throw new IllegalArgumentException("Invalid departure day.");
       this.depart_date.set(Calendar.DAY_OF_MONTH, d_date[1]);
     } else
@@ -339,7 +350,8 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     else
       throw new IllegalArgumentException("Invalid arrival month.");
     if ((a_date[1] > 0) && (a_date[1] < 32)) {
-      if ((a_date[0] == 2) && (a_date[1] > 28) && (!((a_date[1] == 29) && (new GregorianCalendar().isLeapYear(a_date[2])))))
+      if ((a_date[0] == 2) && (a_date[1] > 28) && (!((a_date[1] == 29)
+              && (new GregorianCalendar().isLeapYear(a_date[2])))))
         throw new IllegalArgumentException("Invalid arrival day.");
       this.arrive_date.set(Calendar.DAY_OF_MONTH, a_date[1]);
     } else
@@ -413,7 +425,8 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     else
       throw new IllegalArgumentException("Invalid departure month.");
     if ((d_date[1] > 0) && (d_date[1] < 32)) {
-      if ((d_date[0] == 2) && (d_date[1] > 28) && (!((d_date[1] == 29) && (new GregorianCalendar().isLeapYear(d_date[2])))))
+      if ((d_date[0] == 2) && (d_date[1] > 28) && (!((d_date[1] == 29)
+              && (new GregorianCalendar().isLeapYear(d_date[2])))))
         throw new IllegalArgumentException("Invalid departure day.");
       this.depart_date.set(Calendar.DAY_OF_MONTH, d_date[1]);
     } else
@@ -475,11 +488,15 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
       for (int i = 0; i < 2; i++) {
         try {
           if ((i == 0) && !ifAM) {
-            if (parts4[i].equals("12")) a_time[i] = Integer.parseInt(parts4[i]);
-            else a_time[i] = Integer.parseInt(parts4[i]) + 12;
+            if (parts4[i].equals("12"))
+              a_time[i] = Integer.parseInt(parts4[i]);
+            else
+              a_time[i] = Integer.parseInt(parts4[i]) + 12;
           } else {
-            if ((i == 0) && (parts4[i].equals("12)"))) a_time[i] = Integer.parseInt(parts4[i]) - 12;
-            else a_time[i] = Integer.parseInt(parts4[i]);
+            if ((i == 0) && (parts4[i].equals("12)")))
+              a_time[i] = Integer.parseInt(parts4[i]) - 12;
+            else
+              a_time[i] = Integer.parseInt(parts4[i]);
           }
         } catch (NumberFormatException e) {
           throw new NumberFormatException("Invalid arrival time.");
@@ -496,7 +513,8 @@ public class Flight extends AbstractFlight implements Comparable<AbstractFlight>
     else
       throw new IllegalArgumentException("Invalid arrival month.");
     if ((a_date[1] > 0) && (a_date[1] < 32)) {
-      if ((a_date[0] == 2) && (a_date[1] > 28) && (!((a_date[1] == 29) && (new GregorianCalendar().isLeapYear(a_date[2])))))
+      if ((a_date[0] == 2) && (a_date[1] > 28) && (!((a_date[1] == 29)
+              && (new GregorianCalendar().isLeapYear(a_date[2])))))
         throw new IllegalArgumentException("Invalid arrival day.");
       this.arrive_date.set(Calendar.DAY_OF_MONTH, a_date[1]);
     } else

@@ -59,7 +59,8 @@ public class Parser {
         if (options.contains("-search") && !options.contains("-host"))
             throw new IllegalArgumentException("-seach must be used with a host.");
 
-        if ( (options.contains("-host") && !options.contains("-port")) || (!options.contains("-host") && options.contains("-port")) )
+        if ( (options.contains("-host") && !options.contains("-port"))
+                || (!options.contains("-host") && options.contains("-port")) )
             throw new IllegalArgumentException("-host and -port must be both stated.");
 
         if (options.contains("-search")) {

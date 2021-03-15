@@ -60,25 +60,42 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private Flight createFlight(View view) {
-        String airlineName = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.airline_name_input)).getText(), "Airline name is required.").toString();
+        String airlineName = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.airline_name_input)).getText(),
+                "Airline name is required.").toString();
         if (airlineName.equals("")) throw new IllegalArgumentException("Airline name is required.");
-        String flightNumber = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.flight_number_input)).getText(), "Flight number is required.").toString();
+        String flightNumber = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.flight_number_input)).getText(),
+                "Flight number is required.").toString();
         if (flightNumber.equals("")) throw new IllegalArgumentException("Flight number is required.");
-        String src = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.departure_airport_input)).getText(), "Departure airport code is required.").toString();
+        String src = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.departure_airport_input)).getText(),
+                "Departure airport code is required.").toString();
         if (src.equals("")) throw new IllegalArgumentException("Departure airport code is required.");
-        String dest = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.arrival_airport_input)).getText(), "Arrival airport code is required.").toString();
+        String dest = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.arrival_airport_input)).getText(),
+                "Arrival airport code is required.").toString();
         if (dest.equals("")) throw new IllegalArgumentException("Arrival airport code is required.");
-        String d_date = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.departure_date_input)).getText(), "Departure date is required.").toString();
+        String d_date = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.departure_date_input)).getText(),
+                "Departure date is required.").toString();
         if (d_date.equals("")) throw new IllegalArgumentException("Departure date is required.");
-        String[] d_time = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.departure_time_input)).getText(), "Departure time is required.").toString().split(" ");
+        String[] d_time = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.departure_time_input)).getText(),
+                "Departure time is required.").toString().split(" ");
         if (d_time.length != 2)
             throw new IllegalArgumentException("Wrong/Missing departure time input.");
-        String a_date = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.arrival_date_input)).getText(), "Arrival date is required.").toString();
+        String a_date = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.arrival_date_input)).getText(),
+                "Arrival date is required.").toString();
         if (a_date.equals("")) throw new IllegalArgumentException("Arrival date is required.");
-        String[] a_time = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.arrival_time_input)).getText(), "Arrival time is required.").toString().split(" ");
+        String[] a_time = Objects.requireNonNull((
+                (TextInputEditText) findViewById(R.id.arrival_time_input)).getText(),
+                "Arrival time is required.").toString().split(" ");
         if (a_time.length != 2)
             throw new IllegalArgumentException("Wrong/Missing arrival time input.");
-        return new Flight(new String[] {airlineName, flightNumber, src, d_date, d_time[0], d_time[1], dest, a_date, a_time[0], a_time[1]}, false);
+        return new Flight(new String[] {airlineName, flightNumber,
+                src, d_date, d_time[0], d_time[1], dest, a_date, a_time[0], a_time[1]}, false);
     }
 
     private void updateXml(Flight flight) throws ParserException, IOException {
@@ -100,7 +117,8 @@ public class AddActivity extends AppCompatActivity {
             airline.addFlight(flight);
             xmlDumper.dump(airline);
         } else {
-            XmlDumper xmlDumper = new XmlDumper(directory.getAbsolutePath() + "/" + airlineName.toLowerCase() + ".xml");
+            XmlDumper xmlDumper = new XmlDumper(directory.getAbsolutePath()
+                    + "/" + airlineName.toLowerCase() + ".xml");
             airline = new Airline<>(airlineName);
             airline.addFlight(flight);
             xmlDumper.dump(airline);
